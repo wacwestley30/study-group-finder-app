@@ -4,7 +4,7 @@
 
 ## Description
 
-n
+Studying alone in college is not fun. Studdy helps you to find other like-minded students at your university you can study with!
 
 ## Table of Contents
 
@@ -30,8 +30,6 @@ Licensed under the MIT license.
 [MIT License](https://opensource.org/licenses/MIT)
 
 ## Contributing
-
-
 
 ## Tests
 
