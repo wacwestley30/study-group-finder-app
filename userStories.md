@@ -8,6 +8,17 @@
 - When - I click a group in the search
 - Then - I am taken to a login/register modal/page where I can login, manage my groups or update my profile info.
 
+## Register
+"As a user, I want to create an account on the study group app so that I can access its features and connect with other students."
+
+- Scenario - As a user that wants an account on a study group app
+- Given - I am viewing the registration/homepage/header page.
+- When - I click the "Create an Account" button.
+- Then - I enter my username/password and submit.
+- And - My account is successfully created.
+- And - I am automatically logged in.
+
+
 ## Edit Account
 "As a registered user of a study group app, I want to be able to edit my profile information so that I can keep it up-to-date and relevant."
 
