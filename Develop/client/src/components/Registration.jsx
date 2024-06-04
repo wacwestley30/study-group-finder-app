@@ -8,12 +8,16 @@ function Registration() {
     password: ''
   });
 
-  //when form is submitted, sets isRegistered to true
+  //when form is submitted, sets isRegistered to true, after submit clear form.
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsRegistered(true);//
-  };
-
+    setIsRegistered(true);
+    setFormData({
+        email: '',
+        username: '',
+        password: ''
+    });
+};
   //updates the formdata state object with the latest values entered by the user
   const handleChange = (event) => {
     const { name, value } = event.target;

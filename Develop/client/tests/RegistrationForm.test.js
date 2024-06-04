@@ -23,5 +23,18 @@ describe('Registration Form', () => {
         await waitFor(() => {
             expect(screen.getByText('Registration successful')).toBeInTheDocument();
         }, { timeout: 1000 });
+        //verify form clears after submission
+        expect(screen.getByLabelText('Email:')).toHaveValue('');
+        expect(screen.getByLabelText('Username:')).toHaveValue('');
+        expect(screen.getByLabelText('Password:')).toHaveValue('');
+    });
+    test('displays error message when required fields are not filled out', async () => {
+        render(<Registration />);
+    
+        fireEvent.click(screen.getByText('Register'));
+        
+        await waitFor(() => {
+            expect(screen.getByText('Please fill out all required fields')).toBeInTheDocument();
+        }, { timeout: 1000 });
     });
 });
