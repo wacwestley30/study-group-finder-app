@@ -1,4 +1,4 @@
-# React Portfolio Project
+# Studdy
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -30,6 +30,13 @@ Licensed under the MIT license.
 [MIT License](https://opensource.org/licenses/MIT)
 
 ## Contributing
+[![noodle77](https://github.com/noodle77.png?size=100)](https://github.com/noodle77)
+<a href='https://github.com/bcgosselin'>
+    <img height='100rem' width='100rem' src='https://github.com/bcgosselin.png'/>
+</a>
+<a href='https://github.com/llYakll'>
+    <img height='100rem' width='100rem' src='https://github.com/llYakll.png'/>
+</a>
 
 ## Tests
 
@@ -37,4 +44,4 @@ n
 
 ## Questions
 
-For any questions, please contact WestleyCervantes@gmail.com. Visit [wacwestley30](https://github.com/wacwestley30) for more projects.
+For any questions, please contact bcgosselin@gmail.com, lydoncampbell77@gmail.com, WestleyCervantes@gmail.com, zacharycsullivan@gmail.com. Visit [bcgosselin](https://github.com/bcgosselin), [noodle77](https://github.com/noodle77), [wacwestley30](https://github.com/wacwestley30), [llYakll](https://github.com/llYakll) for more projects.
