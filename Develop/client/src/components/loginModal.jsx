@@ -1,27 +1,38 @@
+// Import dependencies
 import React, { useState } from 'react';
 
+// Define the LoginModal component
 const LoginModal = ({ isOpen, onClose }) => {
+  // Define state variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function to handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    // login logic here
+    // Placeholder for login logic *****
 
+    // Log username and password to console
     console.log('Logging in with', { username, password });
+    
+    // Close the modal
     onClose();
   };
 
+  // If modal is not open, return null
   if (!isOpen) return null;
 
+  // Render the LoginModal component
   return (
-    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
-      <div className="modal-background" onClick={onClose}></div>
-      <div className="modal-content">
-        <div className="box">
-          <h2 className="title">Login</h2>
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}> {/* Modal container with ternary operator to add or remove is active class () */}
+      <div className="modal-background" onClick={onClose}></div> {/* Modal background is a transparent overlay that can act as a click target to close the modal*/}
+      <div className="modal-content"> {/* Modal content a horizontally and vertically centered container, with a maximum width of 640px, in which you can include any content (could be the problem with not displaying full width) */}
+        <div className="box"> {/* Box container */}
+          <h2 className="title">Login</h2> {/* Title */}
+          {/* Login form */}
           <form onSubmit={handleLogin}>
+            {/* Username input field */}
             <div className="field">
               <label className="label">Username</label>
               <div className="control">
@@ -34,6 +45,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 />
               </div>
             </div>
+            {/* Password input field */}
             <div className="field">
               <label className="label">Password</label>
               <div className="control">
@@ -46,6 +58,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 />
               </div>
             </div>
+            {/* Submit button */}
             <div className="field">
               <div className="control">
                 <button className="button is-link" type="submit">Login</button>
@@ -54,9 +67,11 @@ const LoginModal = ({ isOpen, onClose }) => {
           </form>
         </div>
       </div>
+      {/* Modal close button */}
       <button className="modal-close is-large" aria-label="close" onClick={onClose}></button>
     </div>
   );
 };
 
+// Export the LoginModal component
 export default LoginModal;
