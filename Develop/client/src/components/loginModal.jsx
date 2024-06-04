@@ -25,7 +25,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
   // Render the LoginModal component
   return (
-    <div className={`modal ${isOpen ? 'is-active' : ''}`}> {/* Modal container with ternary operator to add or remove is active class () */}
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}> {/* Modal container with ternary operator to add or remove is active class (This allows you to obtain the style of a certain state without having to trigger it. (cosmetic)) */}
       <div className="modal-background" onClick={onClose}></div> {/* Modal background is a transparent overlay that can act as a click target to close the modal*/}
       <div className="modal-content"> {/* Modal content a horizontally and vertically centered container, with a maximum width of 640px, in which you can include any content (could be the problem with not displaying full width) */}
         <div className="box"> {/* Box container */}
