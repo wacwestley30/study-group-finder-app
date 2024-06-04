@@ -25,3 +25,10 @@ it('submits login form with username and password input', async () => {
     expect(onCloseMock).toHaveBeenCalled();
   });
 });
+
+describe('Cypress "Login Modal" Tests', () => {
+  it('mounts', () => {
+    cy.mount(<LoginModal />)
+  });
+});
+
