@@ -18,13 +18,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    groups: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ]
   },
-  // set this to use virtual below
-//   {
-//     toJSON: {
-//       virtuals: true,
-//     },
-//   }
 );
 
 // hash user password
