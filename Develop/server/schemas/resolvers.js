@@ -4,10 +4,15 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('groups');
+      return User.find().populate({
+        path: 'groups',
+        populate: {
+          path: 'members'
+        }
+      });
     },
     groups: async () => {
-      return Group.find();
+      return Group.find().populate('members');
     }
   },
   Mutation: {
@@ -30,6 +35,23 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    removeUser: async (parent, { userId }) => {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Remove the user from all groups' members array
+      await Group.updateMany(
+        { members: userId },
+        { $pull: { members: userId } }
+      );
+
+      // Remove the user
+      await User.findByIdAndDelete(userId);
+
+      return user;
+    },
     addGroup: async (parent, { name }) => {
       const group = await Group.create({ name });
       return group;
@@ -45,10 +67,39 @@ const resolvers = {
         throw new Error('Group not found');
       }
 
-      user.groups.push(group);
-      await user.save();
+      if (!user.groups.includes(groupId)) {
+        user.groups.push(groupId);
+        await user.save();
+      }
 
-      return user.populate('groups');
+      if (!group.members.includes(userId)) {
+        group.members.push(userId);
+        await group.save();
+      }
+
+      return user.populate({
+        path: 'groups',
+        populate: {
+          path: 'members'
+        }
+      });
+    },
+    removeGroup: async (parent, { groupId }) => {
+      const group = await Group.findById(groupId);
+      if (!group) {
+        throw new Error('Group not found');
+      }
+
+      // Remove the group from all users' groups array
+      await User.updateMany(
+        { groups: groupId },
+        { $pull: { groups: groupId } }
+      );
+
+      // Remove the group
+      await Group.findByIdAndDelete(groupId);
+
+      return group;
     }
   }
 }
