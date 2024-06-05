@@ -22,7 +22,7 @@ describe('User Model Tests', () => {
     // beforeEach/afterEach to delete test data?
 
     // Test the User model
-    it('Creates a new user with each field filled with correct data', async () => {
+    it('Creates a new user with each field correctly filled', async () => {
         const user = new User({
             firstName: 'John',
             lastName: 'Doe',
@@ -38,14 +38,30 @@ describe('User Model Tests', () => {
         // Test that a new User is created
         await expect(user.save()).resolves.toBeTruthy();
 
-        // Test for User's username [required]
-        // Test for User's email [required]
-        // Test for User's groups subdoc [required but can be an empty array]
         // Test for User's first name [not required]
+        expect(user.firstName).toBe('John');
+
         // Test for User's last name [not required]
+        expect(user.lastName).toBe('Doe');
+        
+        // Test for User's username [required]
+        expect(user.username).toBe('johndoe');
+
+        // Test for User's email [required]
+        expect(user.email).toBe('john.doe@example.com');
+
         // Test for User's university [not required]
+        expect(user.university).toBe('Example University');
+
         // Test for User's major [not required]
+        expect(user.major).toBe('Computer Science');
+
         // Test for User's year [not required]
+        expect(user.year).toBe(2);
+
+        // Test for User's groups subdoc [required but can be an empty array]
+        expect(user.groups).toEqual([]);
+
     });
 
     // Test for User's password **(with bcrypt hashing)**
