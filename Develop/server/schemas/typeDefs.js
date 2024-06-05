@@ -10,6 +10,7 @@ const typeDefs = `
   type Group {
     _id: ID!
     name: String!
+    members: [User]
   }
 
   type Auth {
@@ -25,8 +26,10 @@ const typeDefs = `
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    removeUser(userId: ID!): User
     addGroup(name: String!): Group
     joinGroup(userId: ID!, groupId: ID!): User
+    removeGroup(groupId: ID!): Group
   }
 `;
 
