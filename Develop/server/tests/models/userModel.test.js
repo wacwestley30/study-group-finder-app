@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('../../models/User.js');
+// const User = require('../../models/User.js');
 
 jest.mock('mongoose', () => ({
     connect: jest.fn().mockResolvedValue(undefined),
+    disconnect: jest.fn().mockResolvedValue(undefined),
 }));
 
 jest.mock('bcrypt', () => ({
@@ -18,8 +19,6 @@ describe('User Model Tests', () => {
     afterEach(async () => {
         await mongoose.disconnect();
     });
-
-    // beforeEach/afterEach to delete test data?
 
     // Test the User model
     it('Creates a new user with each field correctly filled', async () => {
