@@ -1,8 +1,17 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const groupSchema = require('./Group.js')
 
 const userSchema = new Schema(
   {
+    firstName: {
+      type: String,
+      required: false,
+    },
+    lastName: {
+      type: String,
+      required: false,
+    },
     username: {
       type: String,
       required: true,
@@ -18,13 +27,23 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    university: {
+      type: String,
+      required: false,
+    },
+    major: {
+      type: String,
+      required: false,
+    },
+    year: {
+      type: Number,
+      required: false,
+    },
+    groups: {
+      type: [groupSchema],
+      required: true,
+    },
   },
-  // set this to use virtual below
-//   {
-//     toJSON: {
-//       virtuals: true,
-//     },
-//   }
 );
 
 // hash user password
@@ -44,4 +63,4 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 const User = model('User', userSchema);
 
-module.exports = User;
+module.exports = { userSchema, User };
