@@ -19,7 +19,7 @@ function Navbar() {
             {/* Button to open the login modal */}
             <button className="button is-primary" onClick={() => setIsLoginModalOpen(true)}>Login</button>
             {/* Button to open the register modal */}
-            <button className="button is-link" onClick={() => setIsRegisterModalOpen(true)}>Register</button>
+            <button className="button is-link ml-3" onClick={() => setIsRegisterModalOpen(true)}>Register</button>
           </div>
         </div>
       </div>
