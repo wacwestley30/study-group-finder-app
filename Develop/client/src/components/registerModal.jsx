@@ -1,42 +1,51 @@
-// Import dependencies
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
 
-// Define the RegisterModal component
 const RegisterModal = ({ isOpen, onClose }) => {
-// Define state variables for username and password
+  // Define state variables
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // Function to handle form submission
+  const [addUser, { loading, error }] = useMutation(ADD_USER, {
+    onCompleted: (data) => {
+      console.log('Registration successful', data);
+      // Close the modal
+      onClose();
+    },
+  });
+
+  // Function to handle register form submission
   const handleRegister = async (e) => {
     e.preventDefault();
     
-    // Placeholder for register logic *****
-
-    // Log email, username and password to console
-    console.log('Registering with', { email, username, password });
-    // Close the modal
-    onClose();
+    try {
+      await addUser({
+        variables: { email, username, password },
+      });
+    } catch (err) {
+      console.error('Registration failed', err);
+    }
   };
 
   // If modal is not open, return null
   if (!isOpen) return null;
 
-  // Render the RegisterModal component
   return (
-    <div className={`modal ${isOpen ? 'is-active' : ''}`}> {/* Modal container with ternary operator to add or remove is active class (This allows you to obtain the style of a certain state without having to trigger it. (cosmetic)) */}
-      <div className="modal-background" onClick={onClose}></div> {/* Modal background is a transparent overlay that can act as a click target to close the modal*/}
-      <div className="modal-content"> {/* Modal content a horizontally and vertically centered container, with a maximum width of 640px, in which you can include any content (could be the problem with not displaying full width) */}
-        <div className="box"> {/* Box container */}
-          <h2 className="title">Register</h2> {/* Title */}
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
+      <div className="modal-background" onClick={onClose}></div>
+      <div className="modal-content">
+        <div className="box">
+          <h2 className="title">Register</h2>
           {/* Register form */}
           <form onSubmit={handleRegister}>
             {/* Email input field */}
             <div className="field">
-              <label className="label">Email</label>
+              <label className="label" htmlFor="registerEmail">Email</label>
               <div className="control">
                 <input
+                  id="registerEmail"
                   className="input"
                   type="email"
                   value={email}
@@ -47,9 +56,10 @@ const RegisterModal = ({ isOpen, onClose }) => {
             </div>
             {/* Username input field */}
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label" htmlFor="registerUsername">Username</label>
               <div className="control">
                 <input
+                  id="registerUsername"
                   className="input"
                   type="text"
                   value={username}
@@ -60,9 +70,10 @@ const RegisterModal = ({ isOpen, onClose }) => {
             </div>
             {/* Password input field */}
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label" htmlFor="registerPassword">Password</label>
               <div className="control">
                 <input
+                  id="registerPassword"
                   className="input"
                   type="password"
                   value={password}
@@ -74,10 +85,14 @@ const RegisterModal = ({ isOpen, onClose }) => {
             {/* Submit button */}
             <div className="field">
               <div className="control">
-                <button className="button is-link registerButton" type="submit">Register</button>
+                <button className="button is-link registerButton" type="submit" disabled={loading}>
+                  {loading ? 'Registering...' : 'Register'}
+                </button>
               </div>
             </div>
           </form>
+          {/* Display error message if there's an error */}
+          {error && <p className="error">Registration failed: {error.message}</p>}
         </div>
       </div>
       {/* Modal close button */}
@@ -86,5 +101,4 @@ const RegisterModal = ({ isOpen, onClose }) => {
   );
 };
 
-// Export the RegisterModal component
 export default RegisterModal;
