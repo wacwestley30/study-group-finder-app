@@ -1,5 +1,5 @@
 // Import dependencies
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 // Define the RegisterModal component
 const RegisterModal = ({ isOpen, onClose }) => {

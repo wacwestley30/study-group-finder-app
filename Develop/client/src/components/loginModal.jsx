@@ -1,5 +1,5 @@
 // Import dependencies
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 // Define the LoginModal component
 const LoginModal = ({ isOpen, onClose }) => {
