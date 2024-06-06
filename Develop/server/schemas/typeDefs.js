@@ -29,6 +29,7 @@ const typeDefs = `
     removeUser(userId: ID!): User
     addGroup(name: String!): Group
     joinGroup(userId: ID!, groupId: ID!): User
+    leaveGroup(userId: ID!, groupId: ID!): User
     removeGroup(groupId: ID!): Group
   }
 `;

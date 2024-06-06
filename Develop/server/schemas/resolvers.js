@@ -84,6 +84,36 @@ const resolvers = {
         }
       });
     },
+    leaveGroup: async (parent, { userId, groupId }) => {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      const group = await Group.findById(groupId);
+      if (!group) {
+        throw new Error('Group not found');
+      }
+
+      // Remove the group from the user's groups array
+      if (user.groups.includes(groupId)) {
+        user.groups = user.groups.filter(id => id.toString() !== groupId);
+        await user.save();
+      }
+
+      // Remove the user from the group's members array
+      if (group.members.includes(userId)) {
+        group.members = group.members.filter(id => id.toString() !== userId);
+        await group.save();
+      }
+
+      return user.populate({
+        path: 'groups',
+        populate: {
+          path: 'members'
+        }
+      });
+    },
     removeGroup: async (parent, { groupId }) => {
       const group = await Group.findById(groupId);
       if (!group) {
