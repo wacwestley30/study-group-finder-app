@@ -1,55 +1,66 @@
-// Import dependencies
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations'; // Adjust the import path according to your project structure
 
 // Define the LoginModal component
 const LoginModal = ({ isOpen, onClose }) => {
-  // Define state variables for username and password
-  const [username, setUsername] = useState('');
+  // Define state variables
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Function to handle form submission
+  // Use the LOGIN_USER mutation
+  const [login, { loading, error }] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => {
+      console.log('Login successful', data);
+      // Close the modal
+      onClose();
+    },
+  });
+
+  // Function to handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     
-    // Placeholder for login logic *****
-
-    // Log username and password to console
-    console.log('Logging in with', { username, password });
-    
-    // Close the modal
-    onClose();
+    try {
+      await login({
+        variables: { email, password },
+      });
+    } catch (err) {
+      console.error('Login failed', err);
+    }
   };
 
   // If modal is not open, return null
   if (!isOpen) return null;
 
-  // Render the LoginModal component
   return (
-    <div className={`modal ${isOpen ? 'is-active' : ''}`}> {/* Modal container with ternary operator to add or remove is active class (This allows you to obtain the style of a certain state without having to trigger it. (cosmetic)) */}
-      <div className="modal-background" onClick={onClose}></div> {/* Modal background is a transparent overlay that can act as a click target to close the modal*/}
-      <div className="modal-content"> {/* Modal content a horizontally and vertically centered container, with a maximum width of 640px, in which you can include any content (could be the problem with not displaying full width) */}
-        <div className="box"> {/* Box container */}
-          <h2 className="title">Login</h2> {/* Title */}
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
+      <div className="modal-background" onClick={onClose}></div>
+      <div className="modal-content">
+        <div className="box">
+          <h2 className="title">Login</h2>
           {/* Login form */}
           <form onSubmit={handleLogin}>
-            {/* Username input field */}
+            {/* Email input field */}
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label" htmlFor="loginEmail">Email</label>
               <div className="control">
                 <input
+                  id="loginEmail"
                   className="input"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
             </div>
             {/* Password input field */}
             <div className="field">
-              <label className="label">Password</label>
+              <label className="label" htmlFor="loginPassword">Password</label>
               <div className="control">
                 <input
+                  id="loginPassword"
                   className="input"
                   type="password"
                   value={password}
@@ -61,10 +72,14 @@ const LoginModal = ({ isOpen, onClose }) => {
             {/* Submit button */}
             <div className="field">
               <div className="control">
-                <button className="button is-link loginButton" type="submit">Login</button>
+                <button className="button is-link loginButton" type="submit" disabled={loading}>
+                  {loading ? 'Logging in...' : 'Login'}
+                </button>
               </div>
             </div>
           </form>
+          {/* Display error message if there's an error */}
+          {error && <p className="error">Login failed: {error.message}</p>}
         </div>
       </div>
       {/* Modal close button */}
@@ -73,5 +88,4 @@ const LoginModal = ({ isOpen, onClose }) => {
   );
 };
 
-// Export the LoginModal component
 export default LoginModal;
