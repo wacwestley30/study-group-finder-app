@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { Group } = require('./Group');
-const { User } = require('./User');
+const Group = require('../../models/Group.js');
+const User = require('../../models/User.js');
 
 jest.mock('mongoose', () => ({
     connect: jest.fn().mockResolvedValue(undefined),
