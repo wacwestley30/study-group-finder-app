@@ -13,7 +13,7 @@ describe('Group Model Tests', () => {
     });
 
     afterEach(async () => {
-        delete Group;
+        jest.clearAllMocks();
         await mongoose.disconnect();
     });
 
@@ -37,8 +37,8 @@ describe('Group Model Tests', () => {
             name: 'Study Group',
             subject: 'Math',
             description: 'A group to study math together',
-            members: [user],
-            schedule: [{
+            members: [user._id],
+            schedule: {
                 sunday: true,
                 monday: false,
                 tuesday: true,
@@ -46,7 +46,7 @@ describe('Group Model Tests', () => {
                 thursday: true,
                 friday: false,
                 saturday: true,
-            }],
+            },
         });
 
         await expect(group.save()).resolves.toBeTruthy();
@@ -54,7 +54,7 @@ describe('Group Model Tests', () => {
         expect(group.subject).toBe('Math');
         expect(group.description).toBe('A group to study math together');
         expect(group.members.length).toBe(1);
-        expect(group.schedule[0].sunday).toBe(true);
+        expect(group.schedule.sunday).toBe(true);
     });
 
     // Test creating a group with members field missing
@@ -64,7 +64,7 @@ describe('Group Model Tests', () => {
             subject: 'Math',
             description: 'A group to study math together',
             // members is missing
-            schedule: [{
+            schedule: {
                 sunday: true,
                 monday: false,
                 tuesday: true,
@@ -72,7 +72,7 @@ describe('Group Model Tests', () => {
                 thursday: true,
                 friday: false,
                 saturday: true,
-            }],
+            },
         });
 
         await expect(group.save()).rejects.toThrow(mongoose.Error.ValidationError);
@@ -98,7 +98,7 @@ describe('Group Model Tests', () => {
             name: 'Physics Study Group',
             subject: 'Physics',
             description: 'A group to study physics together',
-            members: [user],
+            members: [user._id],
             // schedule is missing
         });
 
@@ -107,6 +107,6 @@ describe('Group Model Tests', () => {
         expect(group.subject).toBe('Physics');
         expect(group.description).toBe('A group to study physics together');
         expect(group.members.length).toBe(1);
-        expect(group.schedule).toEqual([]);
+        expect(group.schedule).toEqual({});
     });
 });
