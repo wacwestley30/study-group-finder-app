@@ -17,6 +17,7 @@ describe('User Model Tests', () => {
     });
 
     afterEach(async () => {
+        jest.clearAllMocks();
         await mongoose.disconnect();
     });
 
