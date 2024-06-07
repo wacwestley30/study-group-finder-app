@@ -4,7 +4,7 @@ import './index.css';
 import 'bulma/css/bulma.min.css';
 
 import App from './App.jsx';
-import Home from './pages/Home.jsx';
+import Home from './pages/home.jsx';
 
 const router = createBrowserRouter([
   {
