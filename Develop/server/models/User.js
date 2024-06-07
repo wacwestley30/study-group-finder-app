@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const groupSchema = require('./Group.js');
 
 const userSchema = new Schema(
   {
@@ -39,10 +38,12 @@ const userSchema = new Schema(
       type: Number,
       required: false,
     },
-    groups: {
-      type: [groupSchema],
-      required: true,
-    },
+    groups: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ]
   },
 );
 
@@ -63,4 +64,4 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 const User = model('User', userSchema);
 
-module.exports = { userSchema, User };
+module.exports = User;
