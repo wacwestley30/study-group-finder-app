@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const userSchema = require('./User.js');
 
 // Define Schedule subdoc schema
 const scheduleSchema = new Schema({
@@ -47,16 +46,19 @@ const groupSchema = new Schema({
         type: String,
         required: false,
     },
-    members: {
-        type: [userSchema],
-        required: true,
-    },
+    members: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        }
+    ],
     schedule: {
-        type: [scheduleSchema],
+        type: scheduleSchema,
         required: false,
     },
 });
 
 const Group = model('Group', groupSchema);
 
-module.exports = { groupSchema, Group };
+module.exports = Group;
