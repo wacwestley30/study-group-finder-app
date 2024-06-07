@@ -65,7 +65,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 // method to populate groups
 userSchema.methods.populateGroups = function() {
-  return this.populate('groups').execPopulate();
+  return this.populate('groups');
 };
 
 const User = model('User', userSchema);
