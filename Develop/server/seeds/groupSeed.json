@@ -1,0 +1,72 @@
+[
+    {
+    "name": "Math Study Group",
+    "subject": "Mathematics",
+    "description": "A group for math enthusiasts",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Bio Research Team",
+    "subject": "Biology",
+    "description": "A group for biology research",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Physics Club",
+    "subject": "Physics",
+    "description": "A club for physics lovers",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Chemistry Group",
+    "subject": "Chemistry",
+    "description": "A group for chemistry studies",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Engineering Group",
+    "subject": "Engineering",
+    "description": "A group for engineering projects",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Computer Science Club",
+    "subject": "Computer Science",
+    "description": "A club for CS students",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Literature Group",
+    "subject": "Literature",
+    "description": "A group for literature discussions",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "History Club",
+    "subject": "History",
+    "description": "A club for history enthusiasts",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Art Group",
+    "subject": "Art",
+    "description": "A group for art projects",
+    "members": "?",
+    "schedule": "?"
+    },
+    {
+    "name": "Philosophy Group",
+    "subject": "Philosophy",
+    "description": "A group for philosophy discussions",
+    "members": "?",
+    "schedule": "?"
+    }
+]
