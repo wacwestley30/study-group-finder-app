@@ -1,18 +1,63 @@
 const { Schema, model } = require('mongoose');
 
+// Define Schedule subdoc schema
+const scheduleSchema = new Schema({
+    sunday: { 
+        type: Boolean, 
+        default: false 
+    },
+    monday: { 
+        type: Boolean, 
+        default: false 
+    },
+    tuesday: { 
+        type: Boolean, 
+        default: false 
+    },
+    wednesday: { 
+        type: Boolean, 
+        default: false 
+    },
+    thursday: { 
+        type: Boolean, 
+        default: false 
+    },
+    friday: { 
+        type: Boolean, 
+        default: false 
+    },
+    saturday: { 
+        type: Boolean, 
+        default: false 
+    },
+});
+
+// Define Group schema
 const groupSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
+    },
+    subject: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: false,
     },
     members: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            required: true,
         }
-    ]
-})
+    ],
+    schedule: {
+        type: scheduleSchema,
+        required: false,
+    },
+});
 
 const Group = model('Group', groupSchema);
 
