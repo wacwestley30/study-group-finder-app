@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-// const User = require('../../models/User.js');
+const User = require('../../models/User.js');
 
 jest.mock('mongoose', () => ({
     connect: jest.fn().mockResolvedValue(undefined),
