@@ -1,0 +1,102 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "username": "johndoe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "university": "Sample University",
+    "major": "Computer Science",
+    "year": 2
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "username": "janesmith",
+    "email": "janesmith@example.com",
+    "password": "password123",
+    "university": "Another University",
+    "major": "Biology",
+    "year": 3
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "username": "alicejohnson",
+    "email": "alicejohnson@example.com",
+    "password": "password123",
+    "university": "Tech University",
+    "major": "Physics",
+    "year": 1
+  },
+  {
+    "firstName": "Bob",
+    "lastName": "Brown",
+    "username": "bobbrown",
+    "email": "bobbrown@example.com",
+    "password": "password123",
+    "university": "Sample University",
+    "major": "Mathematics",
+    "year": 4
+  },
+  {
+    "firstName": "Charlie",
+    "lastName": "Davis",
+    "username": "charliedavis",
+    "email": "charliedavis@example.com",
+    "password": "password123",
+    "university": "Science University",
+    "major": "Chemistry",
+    "year": 2
+  },
+  {
+    "firstName": "Daisy",
+    "lastName": "Miller",
+    "username": "daisymiller",
+    "email": "daisymiller@example.com",
+    "password": "password123",
+    "university": "Tech University",
+    "major": "Engineering",
+    "year": 3
+  },
+  {
+    "firstName": "Ethan",
+    "lastName": "Wilson",
+    "username": "ethanwilson",
+    "email": "ethanwilson@example.com",
+    "password": "password123",
+    "university": "Science University",
+    "major": "Biology",
+    "year": 1
+  },
+  {
+    "firstName": "Fiona",
+    "lastName": "Moore",
+    "username": "fionamoore",
+    "email": "fionamoore@example.com",
+    "password": "password123",
+    "university": "Sample University",
+    "major": "Computer Science",
+    "year": 4
+  },
+  {
+    "firstName": "George",
+    "lastName": "Taylor",
+    "username": "georgetaylor",
+    "email": "georgetaylor@example.com",
+    "password": "password123",
+    "university": "Another University",
+    "major": "Physics",
+    "year": 3
+  },
+  {
+    "firstName": "Hannah",
+    "lastName": "Anderson",
+    "username": "hannahanderson",
+    "email": "hannahanderson@example.com",
+    "password": "password123",
+    "university": "Tech University",
+    "major": "Mathematics",
+    "year": 2
+  }
+]
