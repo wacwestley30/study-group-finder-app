@@ -10,6 +10,7 @@ import 'bulma/css/bulma.min.css';
 
 import Navbar from './components/navbar';
 
+
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -40,7 +41,7 @@ function App() {
       <Navbar />
       <Outlet />
     </ApolloProvider>
-  )
+  );
 }
 
 export default App
