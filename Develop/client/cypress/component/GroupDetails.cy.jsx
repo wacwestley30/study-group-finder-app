@@ -65,7 +65,6 @@ const mocks = [
         },
       },
     },
-    delay: 500, 
   },
 ];
 
@@ -98,8 +97,18 @@ describe('GroupDetails', () => {
       </MockedProvider>
     );
 
+    cy.intercept('POST', '**/graphql').as('graphqlRequest');
+
     cy.contains('Join Group').should('exist').click();
-    cy.wait(1000); 
-    cy.contains('User3').should('exist'); 
+
+    cy.wait('@graphqlRequest', { timeout: 5000 }).then((interception) => {
+      expect(interception).to.exist;
+      const joinGroupMock = mocks.find(mock => mock.request.query === JOIN_GROUP);
+      const expectedResponse = JSON.stringify(joinGroupMock.result.data);
+      const actualResponse = JSON.stringify(interception.response.body.data);
+      expect(actualResponse).to.eq(expectedResponse);
+    });
+
+    cy.contains('User3').should('exist');
   });
 });
