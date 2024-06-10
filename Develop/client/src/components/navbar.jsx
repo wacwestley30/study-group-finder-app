@@ -34,7 +34,7 @@ function Navbar() {
           <div className="is-flex is-align-items-center is-justify-content-space-between">
             <div className="is-flex-grow-1 is-flex is-justify-content-center pl-6">
               <a href="/">
-                <h1 className="title has-text-light has-text-weight-bold pl-4">Studdy</h1>
+                <h1 className="title has-text-light has-text-weight-bold pl-2">Studdy</h1>
               </a>
             </div>
             <a

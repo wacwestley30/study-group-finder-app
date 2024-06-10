@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_GROUPS } from '../utils/queries';
 import SearchBar from '../components/SearchBar';
@@ -8,7 +8,20 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   // Use the useQuery hook to fetch data
-  const { loading, error, data } = useQuery(GET_GROUPS);
+  const { loading, error, data, refetch } = useQuery(GET_GROUPS);
+
+  // Refetch data when component mounts or gains focus
+  useEffect(() => {
+    refetch();
+    const handleFocus = () => {
+      refetch();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [refetch]);
 
   // Handle search term change
   const handleSearch = event => {
