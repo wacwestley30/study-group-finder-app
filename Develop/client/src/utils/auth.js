@@ -5,7 +5,16 @@ import decode from 'jwt-decode';
 class AuthService {
   // get user data
   getProfile() {
-    return decode(this.getToken());
+    try {
+      const token = this.getToken();
+      // console.log('Token:', token);
+      const decodedProfile = decode(token);
+      // console.log('Decoded profile:', decodedProfile);
+      return decodedProfile;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
   }
 
   // check if user's logged in
