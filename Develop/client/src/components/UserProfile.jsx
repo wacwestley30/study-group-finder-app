@@ -20,10 +20,10 @@ const UserProfile = ({ user }) => {
       <p>University: {user.university}</p>
       <p>Major: {user.major}</p>
       <p>Year: {user.year}</p>
-      <div className="level">
+      <div className="level mb-0">
         <h2 className="title my-3">{user.username}'s Groups:</h2>
         {Auth.loggedIn() && (
-          <button className="button is-primary" onClick={handleOpenModal}>Create Group</button>
+          <button className="button is-primary my-3" onClick={handleOpenModal}>Create Group</button>
         )}
       </div>
       <GroupModal isOpen={isModalOpen} onClose={handleCloseModal} />

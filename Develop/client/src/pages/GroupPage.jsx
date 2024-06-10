@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_GROUP } from '../utils/queries';
 import { JOIN_GROUP, LEAVE_GROUP } from '../utils/mutations';
 import UserCard from '../components/UserCard';
+import GroupDetails from '../components/GroupDetails';
 import Auth from '../utils/auth';
 
 const GroupPage = () => {
@@ -64,28 +65,35 @@ const GroupPage = () => {
   const { group } = data;
 
   return (
-    <div className="container">
-      <h1 className="title my-3">{group.name}</h1>
-      <p>Subject: {group.subject}</p>
-      <p>{group.description}</p>
-      <div className="level mb-0">
-        <h2 className="title my-3">Members:</h2>
-        {Auth.loggedIn() && !isMember && (
-          <button className="button is-primary" onClick={handleJoinGroup}>
-            Join Group
-          </button>
-        )}
-        {Auth.loggedIn() && isMember && (
-          <button className="button is-danger" onClick={handleLeaveGroup}>
-            Leave Group
-          </button>
-        )}
+    <div className="container has-text-centered-touch">
+      <div className="is-hidden-touch">
+        <GroupDetails
+          group={group}
+          isMember={isMember}
+          handleJoinGroup={handleJoinGroup}
+          handleLeaveGroup={handleLeaveGroup}
+        />
       </div>
-      <div className="columns is-multiline">
-        {group.members && group.members.map(user => (
-          <UserCard key={user._id} user={user} />
-        ))}
+      <div className="is-hidden-desktop mx-4">
+        <GroupDetails
+          group={group}
+          isMember={isMember}
+          handleJoinGroup={handleJoinGroup}
+          handleLeaveGroup={handleLeaveGroup}
+        />
       </div>
+      <>
+        <div className="columns is-multiline is-hidden-touch">
+          {group.members && group.members.map(user => (
+            <UserCard key={user._id} user={user} />
+          ))}
+        </div>
+        <div className="columns is-multiline is-hidden-desktop mx-1">
+          {group.members && group.members.map(user => (
+            <UserCard key={user._id} user={user} />
+          ))}
+        </div>
+      </>
       {isMember && (
         <div className={`modal ${showModal ? 'is-active' : ''}`}>
           <div className="modal-background" onClick={handleModalClose}></div>
