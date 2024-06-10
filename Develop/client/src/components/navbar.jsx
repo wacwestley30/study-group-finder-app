@@ -21,7 +21,7 @@ function Navbar() {
               links={[
                 <Link key={1} className="nav-link" to="/">Home</Link>,
                 <Link key={2} className="nav-link" to="/groups">Groups</Link>,
-                <Link key={3} className="nav-link" to="/profile">Profile</Link>
+                <Link key={3} className="nav-link" to="/me">Profile</Link>
               ]}
             />
         </div>
