@@ -63,11 +63,13 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    editUser: async (_, { university, major, year }, { user }) => {
+    editUser: async (_, { firstName, lastName, university, major, year }, { user }) => {
       if (!user) {
         throw AuthenticationError;
       }
       return await User.findByIdAndUpdate(user._id, {
+        firstName,
+        lastName,
         university,
         major,
         year
