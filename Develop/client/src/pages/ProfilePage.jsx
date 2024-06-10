@@ -31,8 +31,6 @@ const ProfilePage = () => {
   const user = userData?.me || userData?.user || {};
   const groups = groupsData?.groups || [];
 
-  console.log(user)
-
   // Handle rendering based on user's groups and all groups
   return (
     <div className="container">
@@ -45,7 +43,7 @@ const ProfilePage = () => {
       {user.groups.length === 0 ? (
         <div className="my-3">
           <p>You aren't in any groups yet!</p>
-          <button className="button is-primary" onClick={() => setShowAllGroups(true)}>
+          <button className="button is-primary" href="/">
             Find Groups
           </button>
         </div>

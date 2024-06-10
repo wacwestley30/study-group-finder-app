@@ -80,9 +80,24 @@ const resolvers = {
 
       return user;
     },
-    addGroup: async (parent, { name }) => {
-      const group = await Group.create({ name });
-      return group;
+    addGroup: async (parent, { name, subject, description }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in');
+      }
+
+      const group = await Group.create({
+        name,
+        subject,
+        description,
+        members: [context.user._id]
+      });
+
+      // Add group to the user's groups
+      await User.findByIdAndUpdate(context.user._id, {
+        $push: { groups: group._id }
+      });
+
+      return group.populate('members');
     },
     joinGroup: async (parent, { userId, groupId }) => {
       const user = await User.findById(userId);

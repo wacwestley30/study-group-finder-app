@@ -37,15 +37,12 @@ export const REMOVE_USER = gql`
 `;
 
 export const ADD_GROUP = gql`
-  mutation addGroup($name: String!) {
-    addGroup(name: $name) {
+  mutation addGroup($name: String!, $subject: String, $description: String) {
+    addGroup(name: $name, subject: $subject, description: $description) {
       _id
       name
-      members {
-        _id
-        username
-        email
-      }
+      subject
+      description
     }
   }
 `;
