@@ -1,5 +1,33 @@
 import { gql } from '@apollo/client';
 
+export const GET_ME = gql`
+  query getMe {
+    me {
+      _id
+      username
+      email
+      groups {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query getUser($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      groups {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query getUsers {
     users {
@@ -18,15 +46,15 @@ export const GET_USERS = gql`
   }
 `;
 
-export const GET_USER = gql`
-  query getUser($username: String!) {
-    user(username: $username) {
+export const GET_GROUP = gql`
+  query getGroup($groupId: ID!) {
+    group(groupId: $groupId) {
       _id
-      username
-      email
-      groups {
+      name
+      members {
         _id
-        name
+        username
+        email
       }
     }
   }
