@@ -1,53 +1,30 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_ME, GET_GROUPS } from '../utils/queries';
+import { GET_GROUP } from '../utils/queries';
+import UserCard from '../components/UserCard';
 
 const GroupPage = () => {
-  const [showAllGroups, setShowAllGroups] = useState(false);
+  const { groupId } = useParams();
+  const { loading, error, data } = useQuery(GET_GROUP, {
+    variables: { groupId },
+  });
 
-  const { loading: meLoading, error: meError, data: meData } = useQuery(GET_ME);
-  const { loading: groupsLoading, error: groupsError, data: groupsData } = useQuery(GET_GROUPS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-  if (meLoading || groupsLoading) return <p>Loading...</p>;
-  if (meError || groupsError) return <p>Error: {meError?.message || groupsError?.message}</p>;
-
-  const handleFindGroupsClick = () => {
-    setShowAllGroups(true);
-  };
-
-  const me = meData.me;
-  const groups = groupsData.groups;
+  const { group } = data;
 
   return (
     <div className="container">
-      <h1 className="title">Your Groups</h1>
-      {me.groups.length === 0 ? (
-        <div>
-          <p>You aren't in any groups yet!</p>
-          <button className="button is-primary" onClick={handleFindGroupsClick}>Find Groups</button>
-        </div>
-      ) : (
-        <ul>
-          {me.groups.map((group) => (
-            <li key={group._id}>
-              <Link to={`/group/${group._id}`} className="has-text-link">{group.name}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      {showAllGroups && (
-        <div>
-          <h2 className="subtitle">All Groups</h2>
-          <ul>
-            {groups.map((group) => (
-              <li key={group._id}>
-                <Link to={`/group/${group._id}`} className="has-text-link">{group.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <h1 className="title my-3">{group.name}</h1>
+      <div className="subtitle my-3">Subject: {group.subject}</div>
+      <div className="subtitle my-3">{group.description}</div>
+      <h2 className="title is-4 my-3">Members:</h2>
+      <div className="columns is-multiline">
+        {group.members.map(user => (
+          <UserCard key={user._id} user={user} />
+        ))}
+      </div>
     </div>
   );
 };

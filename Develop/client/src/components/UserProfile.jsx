@@ -6,7 +6,7 @@ const UserProfile = ({ user }) => {
         <p>University: {user.university}</p>
         <p>Major: {user.major}</p>
         <p>Year: {user.year}</p>
-        <h2 className="title my-3">{user.username}'s Groups</h2>
+        <h2 className="title my-3">{user.username}'s Groups:</h2>
       </>
     );
   };

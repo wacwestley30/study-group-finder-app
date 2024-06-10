@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_USER, GET_ME, GET_GROUPS } from '../utils/queries';
 import GroupCard from '../components/GroupCard';
@@ -7,15 +7,16 @@ import UserProfile from '../components/UserProfile';
 import Auth from '../utils/auth';
 
 const ProfilePage = () => {
-  const { username: userParam } = useParams();
+  const { userId: userParam } = useParams();
+  const isCurrentUser = !userParam;
   const [showAllGroups, setShowAllGroups] = useState(false);
 
   // Fetch user data
   const { loading: userLoading, error: userError, data: userData } = useQuery(
-    userParam ? GET_USER : GET_ME,
+    isCurrentUser ? GET_ME : GET_USER,
     {
-      variables: { username: userParam },
-      skip: !userParam && !Auth.loggedIn(), // Skip query if no username and not logged in
+      variables: { userId: userParam },
+      skip: isCurrentUser && !Auth.loggedIn(), // Skip query if viewing own profile and not logged in
     }
   );
 
@@ -29,6 +30,8 @@ const ProfilePage = () => {
   // Extract user data and groups data
   const user = userData?.me || userData?.user || {};
   const groups = groupsData?.groups || [];
+
+  console.log(user)
 
   // Handle rendering based on user's groups and all groups
   return (

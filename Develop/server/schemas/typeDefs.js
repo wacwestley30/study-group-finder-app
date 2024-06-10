@@ -28,8 +28,9 @@ const typeDefs = `
   type Query {
     me: User
     users: [User]
-    user(username: String!): User
+    user(userId: ID!): User
     groups: [Group]
+    group(groupId: ID!): Group
   }
 
   type Mutation {
