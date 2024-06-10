@@ -1,7 +1,9 @@
 // Import dependencies
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import LoginModal from './loginModal';
 import RegisterModal from './registerModal';
+import NavLinks from './UI/navlinks';
 
 function Navbar() {
   // Define state to track whether the modal is open or closed
@@ -11,8 +13,17 @@ function Navbar() {
   return (
     <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
       <div className="navbar-menu">
-        <div className="navbar-start">
-            <h1 className="title has-text-light is-flex is-align-items-center has-text-weight-bold ml-3">Studdy</h1>
+        <div className="navbar-start is-align-items-center">
+          <a href="/">
+            <h1 className="title has-text-light is-flex has-text-weight-bold mx-3">Studdy</h1>
+          </a>
+            <NavLinks
+              links={[
+                <Link key={1} className="nav-link" to="/">Home</Link>,
+                <Link key={2} className="nav-link" to="/groups">Groups</Link>,
+                <Link key={3} className="nav-link" to="/profile">Profile</Link>
+              ]}
+            />
         </div>
         <div className="navbar-end">
           <div className="navbar-item">
