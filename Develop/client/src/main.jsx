@@ -8,7 +8,7 @@ import App from './App.jsx';
 import Home from './pages/home.jsx';
 import GroupPage from './pages/GroupPage';
 import GroupDetails from './pages/GroupDetails';
-import ProfilePage from './pages/ProfilePage'; // Import ProfilePage component
+import ProfilePage from './pages/ProfilePage'; // Import ProfilePage
 
 const router = createBrowserRouter([
   {
