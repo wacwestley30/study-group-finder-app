@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useQuery } from '@apollo/client';
 import { GET_USER, GET_ME, GET_GROUPS } from '../utils/queries';
 import GroupCard from '../components/GroupCard';
@@ -8,6 +8,7 @@ import Auth from '../utils/auth';
 
 const ProfilePage = () => {
   const { userId: userParam } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate
   const isCurrentUser = !userParam;
   const [showAllGroups, setShowAllGroups] = useState(false);
 
@@ -43,7 +44,7 @@ const ProfilePage = () => {
       {user.groups.length === 0 ? (
         <div className="my-3">
           <p>You aren't in any groups yet!</p>
-          <button className="button is-primary" href="/">
+          <button className="button is-primary" onClick={() => navigate('/')}>
             Find Groups
           </button>
         </div>
