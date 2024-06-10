@@ -8,6 +8,7 @@ import App from './App.jsx';
 import Home from './pages/home.jsx';
 import GroupPage from './pages/GroupPage';
 import GroupDetails from './pages/GroupDetails';
+import ProfilePage from './pages/ProfilePage'; // Import ProfilePage component
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/group/:groupId',
         element: <GroupDetails />,
+      },
+      {
+        path: '/profile/:username', // Define route for ProfilePage
+        element: <ProfilePage />,
       },
     ],
   },
