@@ -26,8 +26,8 @@ export const GET_ME = gql`
 `;
 
 export const GET_USER = gql`
-  query getUser($username: String!) {
-    user(username: $username) {
+  query getUser($userId: ID!) {
+    user(userId: $userId) {
       _id
       firstName
       lastName
@@ -41,6 +41,10 @@ export const GET_USER = gql`
         name
         subject
         description
+        members {
+          _id
+          username
+        }
       }
     }
   }

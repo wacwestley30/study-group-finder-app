@@ -1,5 +1,6 @@
 const { User, Group } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
+const { Types } = require('mongoose');
 
 const resolvers = {
   Query: {
@@ -23,8 +24,12 @@ const resolvers = {
         }
       });
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate({
+    user: async (parent, { userId }) => {
+      if (!Types.ObjectId.isValid(userId)) {
+        throw new Error('Invalid user ID');
+      }
+
+      return User.findById(userId).populate({
         path: 'groups',
         populate: {
           path: 'members'
@@ -33,6 +38,9 @@ const resolvers = {
     },
     groups: async () => {
       return Group.find().populate('members');
+    },
+    group: async (parent, { groupId }) => {
+      return Group.findById(groupId).populate('members');
     }
   },
   Mutation: {

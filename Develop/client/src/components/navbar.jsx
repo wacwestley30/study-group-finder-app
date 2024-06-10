@@ -58,15 +58,13 @@ function Navbar() {
               <NavLinks
                 links={[
                   <Link key={1} className="nav-link" to="/">Home</Link>,
-                  <Link key={2} className="nav-link" to="/groups">Groups</Link>,
                   <Link key={3} className="nav-link" to="/me">Profile</Link>
                 ]}
               />
             ) : (
               <NavLinks
                 links={[
-                  <Link key={1} className="nav-link" to="/">Home</Link>,
-                  <Link key={2} className="nav-link" to="/groups">Groups</Link>
+                  <Link key={1} className="nav-link" to="/">Home</Link>
                 ]}
               />
             )}
