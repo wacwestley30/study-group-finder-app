@@ -30,13 +30,36 @@ Licensed under the MIT license.
 [MIT License](https://opensource.org/licenses/MIT)
 
 ## Contributing
-[![noodle77](https://github.com/noodle77.png?size=100)](https://github.com/noodle77)
-<a href='https://github.com/bcgosselin'>
-    <img height='100rem' width='100rem' src='https://github.com/bcgosselin.png'/>
-</a>
-<a href='https://github.com/llYakll'>
-    <img height='100rem' width='100rem' src='https://github.com/llYakll.png'/>
-</a>
+<div style="text-align: left;">
+    <div style="display: inline-block; margin: 10px;">
+        <a href='https://github.com/noodle77'>
+            <img src='https://github.com/noodle77.png?size=100' alt='noodle77' height='100' width='100'/>
+            <br/>
+            <sub><b>noodle77</b></sub>
+        </a>
+    </div>
+    <div style="display: inline-block; margin: 10px;">
+        <a href='https://github.com/bcgosselin'>
+            <img src='https://github.com/bcgosselin.png' alt='bcgosselin' height='100' width='100'/>
+            <br/>
+            <sub><b>bcgosselin</b></sub>
+        </a>
+    </div>
+    <div style="display: inline-block; margin: 10px;">
+        <a href='https://github.com/wacwestley30'>
+            <img src='https://github.com/wacwestley30.png' alt='wacwestley30' height='100' width='100'/>
+            <br/>
+            <sub><b>wacwestley30</b></sub>
+        </a>
+    </div>
+    <div style="display: inline-block; margin: 10px;">
+        <a href='https://github.com/llYakll'>
+            <img src='https://github.com/llYakll.png' alt='llYakll' height='100' width='100'/>
+            <br/>
+            <sub><b>llYakll</b></sub>
+        </a>
+    </div>
+</div>
 
 ## Tests
 
