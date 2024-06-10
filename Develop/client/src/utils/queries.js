@@ -65,6 +65,8 @@ export const GET_GROUPS = gql`
     groups {
       _id
       name
+      subject
+      description
       members {
         _id
         username

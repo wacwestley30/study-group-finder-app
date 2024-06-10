@@ -15,6 +15,8 @@ const typeDefs = `
   type Group {
     _id: ID!
     name: String!
+    subject: String
+    description: String
     members: [User]
   }
 
