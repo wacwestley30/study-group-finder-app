@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GET_GROUP } from '../utils/queries';
-import { JOIN_GROUP } from '../utils/mutations';
+import { JOIN_GROUP, LEAVE_GROUP } from '../utils/mutations';
 
 const GroupDetails = ({ userId }) => {
   const { groupId } = useParams();
@@ -12,6 +12,8 @@ const GroupDetails = ({ userId }) => {
   const { loading, error, data, refetch } = useQuery(GET_GROUP, {
     variables: { groupId },
     onCompleted: (data) => {
+      const isMember = data.group.members.some(member => member._id === userId);
+      setIsMemberState(isMember);
       console.log('GET_GROUP query completed:', data);
     },
   });
@@ -27,12 +29,31 @@ const GroupDetails = ({ userId }) => {
     },
   });
 
+  const [leaveGroup] = useMutation(LEAVE_GROUP, {
+    onCompleted: (data) => {
+      console.log('LEAVE_GROUP mutation completed:', data);
+      refetch();
+      setIsMemberState(false);
+    },
+    onError: (error) => {
+      console.error('LEAVE_GROUP mutation error:', error);
+    },
+  });
+
   const handleJoin = () => {
     console.log('Join button clicked');
     joinGroup({ variables: { userId, groupId } })
       .then(response => console.log('Join Group response:', response))
       .catch(error => console.error('Join Group error:', error));
     console.log('Join Group mutation called with:', { userId, groupId });
+  };
+
+  const handleLeave = () => {
+    console.log('Leave button clicked');
+    leaveGroup({ variables: { userId, groupId } })
+      .then(response => console.log('Leave Group response:', response))
+      .catch(error => console.error('Leave Group error:', error));
+    console.log('Leave Group mutation called with:', { userId, groupId });
   };
 
   if (loading) {
@@ -55,7 +76,11 @@ const GroupDetails = ({ userId }) => {
           <li key={member._id}>{member.username}</li>
         ))}
       </ul>
-      {!isMemberState && <button onClick={handleJoin}>Join Group</button>}
+      {!isMemberState ? (
+        <button onClick={handleJoin}>Join Group</button>
+      ) : (
+        <button onClick={handleLeave}>Leave Group</button>
+      )}
       <button onClick={() => navigate('/groups')}>Back to Groups</button>
     </div>
   );
