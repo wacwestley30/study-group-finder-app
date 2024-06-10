@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+import Auth from '../utils/auth'; // Import the Auth module
 
 const RegisterModal = ({ isOpen, onClose }) => {
   // Define state variables
@@ -11,8 +12,8 @@ const RegisterModal = ({ isOpen, onClose }) => {
   const [addUser, { loading, error }] = useMutation(ADD_USER, {
     onCompleted: (data) => {
       console.log('Registration successful', data);
-      // Close the modal
-      onClose();
+      // If registration is successful, log in the user
+      handleLogin();
     },
   });
 
@@ -26,6 +27,29 @@ const RegisterModal = ({ isOpen, onClose }) => {
       });
     } catch (err) {
       console.error('Registration failed', err);
+    }
+  };
+
+  // Function to handle login after successful registration
+  const handleLogin = async () => {
+    try {
+      const { data } = await login({
+        variables: { email, password },
+      });
+
+      // Check if login was successful
+      if (data?.login?.token) {
+        // Save token to local storage
+        Auth.login(data.login.token);
+        
+        // Close the modal
+        onClose();
+
+        // Refresh the page to update Navbar
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error('Login after registration failed', err);
     }
   };
 

@@ -3,6 +3,18 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findById(context.user._id).populate({
+          path: 'groups',
+          populate: {
+            path: 'members'
+          }
+        }).select('-__v -password');
+        return userData;
+      }
+      throw new AuthenticationError('You must be logged in');
+    },
     users: async () => {
       return User.find().populate({
         path: 'groups',

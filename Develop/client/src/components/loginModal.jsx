@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations'; // Adjust the import path according to your project structure
+import { LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 // Define the LoginModal component
 const LoginModal = ({ isOpen, onClose }) => {
@@ -22,9 +23,21 @@ const LoginModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     
     try {
-      await login({
+      const { data } = await login({
         variables: { email, password },
       });
+  
+      // Check if login was successful
+      if (data?.login?.token) {
+        // Save token to local storage
+        Auth.login(data.login.token);
+        
+        // Close the modal
+        onClose();
+  
+        // Refresh the page to update Navbar
+        window.location.reload();
+      }
     } catch (err) {
       console.error('Login failed', err);
     }
