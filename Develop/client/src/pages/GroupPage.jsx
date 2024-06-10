@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_GROUP } from '../utils/queries';
-import { JOIN_GROUP } from '../utils/mutations';
+import { JOIN_GROUP, LEAVE_GROUP } from '../utils/mutations';
 import UserCard from '../components/UserCard';
 import Auth from '../utils/auth';
 
@@ -13,6 +13,9 @@ const GroupPage = () => {
   });
 
   const [joinGroup] = useMutation(JOIN_GROUP);
+  const [leaveGroup] = useMutation(LEAVE_GROUP, {
+    refetchQueries: [{ query: GET_GROUP, variables: { groupId } }],
+  });
   const [showModal, setShowModal] = useState(false);
   const [isMember, setIsMember] = useState(false);
 
@@ -37,6 +40,20 @@ const GroupPage = () => {
     }
   };
 
+  const handleLeaveGroup = async () => {
+    try {
+      await leaveGroup({
+        variables: {
+          userId: Auth.getProfile().authenticatedPerson._id,
+          groupId: groupId,
+        },
+      });
+      setIsMember(false);
+    } catch (error) {
+      console.error('Error leaving group:', error);
+    }
+  };
+
   const handleModalClose = () => {
     setShowModal(false);
   };
@@ -56,6 +73,11 @@ const GroupPage = () => {
         {Auth.loggedIn() && !isMember && (
           <button className="button is-primary" onClick={handleJoinGroup}>
             Join Group
+          </button>
+        )}
+        {Auth.loggedIn() && isMember && (
+          <button className="button is-danger" onClick={handleLeaveGroup}>
+            Leave Group
           </button>
         )}
       </div>
