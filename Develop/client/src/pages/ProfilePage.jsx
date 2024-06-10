@@ -1,55 +1,65 @@
-import React from 'react';
-import { useParams, Navigate, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_USER, GET_ME } from '../utils/queries';
+import { GET_USER, GET_ME, GET_GROUPS } from '../utils/queries';
+import GroupCard from '../components/GroupCard';
+import UserProfile from '../components/UserProfile';
 import Auth from '../utils/auth';
 
 const ProfilePage = () => {
   const { username: userParam } = useParams();
+  const [showAllGroups, setShowAllGroups] = useState(false);
 
-  // Determine if we should query for the logged-in user or another user
-  const isLoggedInUser = Auth.loggedIn() && Auth.getProfile().data.username === userParam;
+  // Fetch user data
+  const { loading: userLoading, error: userError, data: userData } = useQuery(
+    userParam ? GET_USER : GET_ME,
+    {
+      variables: { username: userParam },
+      skip: !userParam && !Auth.loggedIn(), // Skip query if no username and not logged in
+    }
+  );
 
-  const { loading, error, data } = useQuery(userParam ? GET_USER : GET_ME, {
-    variables: { username: userParam },
-    skip: !userParam && !Auth.loggedIn(), // Skip query if no username and not logged in
-  });
+  // Fetch all groups data
+  const { loading: groupsLoading, error: groupsError, data: groupsData } = useQuery(GET_GROUPS);
 
-  // Handle loading state
-  if (loading) return <div>Loading...</div>;
+  // Handle loading and error states
+  if (userLoading || groupsLoading) return <p>Loading...</p>;
+  if (userError || groupsError) return <p>Error: {userError?.message || groupsError?.message}</p>;
 
-  // Handle error state
-  if (error) return <div>Error: {error.message}</div>;
+  // Extract user data and groups data
+  const user = userData?.me || userData?.user || {};
+  const groups = groupsData?.groups || [];
 
-  // Get the user data from the query result
-  const user = data?.me || data?.user || {};
-
-  // Redirect to login if not logged in and no user data
-  if (!Auth.loggedIn() || !user?.username) {
-    return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to sign up or log in!
-      </h4>
-    );
-  }
-
-  // Redirect logged-in user to their own profile page if accessing another user's profile
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/me" />;
-  }
-
+  // Handle rendering based on user's groups and all groups
   return (
     <div className="container">
-      <h1 className="title">{user.username}'s Profile</h1>
-      <h2 className="subtitle">Email: {user.email}</h2>
-      <h2 className="subtitle">Groups:</h2>
-      <ul>
-        {user.groups.map((group) => (
-          <li key={group._id}>
-            <Link to={`/group/${group._id}`}>{group.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="is-hidden-touch">
+        <UserProfile user={user} />
+      </div>
+      <div className="is-hidden-desktop mx-4 has-text-centered">
+        <UserProfile user={user} />
+      </div>
+      {user.groups.length === 0 ? (
+        <div className="my-3">
+          <p>You aren't in any groups yet!</p>
+          <button className="button is-primary" onClick={() => setShowAllGroups(true)}>
+            Find Groups
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="columns is-multiline is-hidden-touch">
+            {user.groups.map(group => (
+              <GroupCard key={group._id} group={group} />
+            ))}
+          </div>
+          <div className="columns is-multiline is-hidden-desktop mx-1">
+            {user.groups.map(group => (
+              <GroupCard key={group._id} group={group} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

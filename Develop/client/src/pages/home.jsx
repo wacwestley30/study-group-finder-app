@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_GROUPS } from '../utils/queries';
+import SearchBar from '../components/SearchBar';
+import GroupCard from '../components/GroupCard';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,40 +25,37 @@ const Home = () => {
   );
 
   return (
-    <main>
-        <div className="container">
-            <h1 className="title my-3">All Groups</h1>
-            {/* Search bar */}
-            <div className="field my-3">
-                <div className="control">
-                  <input
-                      className="input"
-                      type="text"
-                      placeholder="Search by name or subject"
-                      value={searchTerm}
-                      onChange={handleSearch}
-                  />
-                </div>
-            </div>
-            {/* Display groups */}
-            <div className="columns is-multiline">
-                {filteredGroups.map(group => (
-                <div key={group._id} className="column is-one-third">
-                    <div className="card">
-                        <div className="card-content has-text-centered">
-                            <div className="content is-size-4 has-text-weight-bold">{group.name}</div>
-                            <div className="content">Subject: {group.subject}</div>
-                            <div className="content">Number of members: {group.members.length}</div>
-                            <Link to={`/group/${group._id}`} className="button is-link">
-                            View Details
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                ))}
-            </div>
-        </div>
-    </main>
+    <div className="container">
+      {/* Search bar */}
+      <div className="is-hidden-touch">
+        <SearchBar
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          title="Search All Groups"
+          style="my-2"
+        />
+      </div>
+      {/* Search bar */}
+      <div className="is-hidden-desktop">
+        <SearchBar
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          title="Search All Groups"
+          style="m-2"
+        />
+      </div>
+      {/* Display groups */}
+      <div className="columns is-multiline is-hidden-touch">
+        {filteredGroups.map(group => (
+          <GroupCard key={group._id} group={group} />
+        ))}
+      </div>
+      <div className="columns is-multiline is-hidden-desktop mx-1">
+        {filteredGroups.map(group => (
+          <GroupCard key={group._id} group={group} />
+        ))}
+      </div>
+    </div>
   );
 };
 
