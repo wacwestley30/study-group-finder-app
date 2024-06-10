@@ -1,65 +1,55 @@
 import React from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_USER } from '../utils/queries';
+import { GET_USER, GET_ME } from '../utils/queries';
+import Auth from '../utils/auth';
 
-// this will load user information without Auth I think there is a persistence issue with staying logged in wwhen accessing new route
+const ProfilePage = () => {
+  const { username: userParam } = useParams();
 
-// const ProfilePage = () => {
-//   const { username } = useParams();
-//   const { loading, error, data } = useQuery(GET_USER, {
-//     variables: { username },
-//   });
+  // Determine if we should query for the logged-in user or another user
+  const isLoggedInUser = Auth.loggedIn() && Auth.getProfile().data.username === userParam;
 
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p>Error: {error.message}</p>;
-
-//   const { user } = data;
-
-const ProfilePage = ({ userId }) => {
-  const { username } = useParams();
-
-  const { loading, error, data } = useQuery(GET_USER, {
-    variables: { username },
+  const { loading, error, data } = useQuery(userParam ? GET_USER : GET_ME, {
+    variables: { username: userParam },
+    skip: !userParam && !Auth.loggedIn(), // Skip query if no username and not logged in
   });
 
-  if (loading) {
-    return <p>Loading...</p>;
+  // Handle loading state
+  if (loading) return <div>Loading...</div>;
+
+  // Handle error state
+  if (error) return <div>Error: {error.message}</div>;
+
+  // Get the user data from the query result
+  const user = data?.me || data?.user || {};
+
+  // Redirect to login if not logged in and no user data
+  if (!Auth.loggedIn() || !user?.username) {
+    return (
+      <h4>
+        You need to be logged in to see this. Use the navigation links above to sign up or log in!
+      </h4>
+    );
   }
 
-  if (error) {
-    console.error('GET_USER query error:', error);
-    return <p>Error: {error.message}</p>;
-  }
-
-  const { user } = data;
-
-  // Redirect to login page if user is not logged in
-  if (!userId) {
-    return <Navigate to="/" replace />;
-  }
-
-  // Redirect to unauthorized page if user tries to access another profile
-  if (userId !== user._id) {
-    return <Navigate to="/" replace />;
+  // Redirect logged-in user to their own profile page if accessing another user's profile
+  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    return <Navigate to="/me" />;
   }
 
   return (
     <div className="container">
-      <div className="columns is-centered">
-        <div className="column is-half">
-          <div className="box">
-            <h1 className="title">{user.username}'s Profile</h1>
-            <p><strong>Email:</strong> {user.email}</p>
-            <h2>{/*line break or 'GROUPS'*/}</h2>
-            <ul>
-              {user.groups.map(group => (
-                <li key={group._id}>{group.name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <h1 className="title">{user.username}'s Profile</h1>
+      <h2 className="subtitle">Email: {user.email}</h2>
+      <h2 className="subtitle">Groups:</h2>
+      <ul>
+        {user.groups.map((group) => (
+          <li key={group._id}>
+            <Link to={`/group/${group._id}`}>{group.name}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
