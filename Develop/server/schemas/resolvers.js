@@ -11,6 +11,14 @@ const resolvers = {
         }
       });
     },
+    user: async (parent, { username }) => {
+      return User.findOne({ username }).populate({
+        path: 'groups',
+        populate: {
+          path: 'members'
+        }
+      });
+    },
     groups: async () => {
       return Group.find().populate('members');
     }

@@ -14,6 +14,20 @@ export const GET_ME = gql`
   }
 `;
 
+export const GET_USER = gql`
+  query getUser($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      groups {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query getUsers {
     users {

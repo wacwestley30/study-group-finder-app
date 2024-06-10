@@ -6,6 +6,14 @@ const groupSchema = new Schema({
         required: true,
         unique: true,
     },
+    subject: {
+        type: String,
+        required: false,
+    },
+    description: {
+        type: String,
+        required: false,
+    },
     members: [
         {
             type: Schema.Types.ObjectId,

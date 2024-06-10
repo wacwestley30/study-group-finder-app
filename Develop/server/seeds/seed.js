@@ -4,33 +4,44 @@ const cleanDB = require('./cleanDB');
 const usersData = require('./userSeed');
 const groupsData = require('./groupSeed');
 
-const getUsersObjectIds = async () => {
-  const users = await User.find();
+const seedUsersAndGroups = async () => {
+
+  // Clean DB
+  await cleanDB('Group', 'groups');
+  await cleanDB('User', 'users');
+
+  // Insert users
+  const createdUsers = await User.create(usersData);
+
+  // Get user IDs
   const userMap = {};
-  users.forEach(user => {
+  createdUsers.forEach(user => {
     userMap[user.username] = user._id;
   });
-  return userMap;
+
+  // Update group data with user IDs and user group associations
+  const updatedGroupsData = groupsData.map(group => {
+    const memberIds = group.members.map(username => userMap[username]);
+    return {
+      ...group,
+      members: memberIds
+    };
+  });
+
+  // Insert groups
+  const createdGroups = await Group.create(updatedGroupsData);
+
+  // Update user group associations
+  for (const group of createdGroups) {
+    for (const memberId of group.members) {
+      await User.findByIdAndUpdate(memberId, { $addToSet: { groups: group._id } });
+    }
+  }
 };
 
 db.once('open', async () => {
   try {
-    await cleanDB('Group', 'groups');
-    await cleanDB('User', 'users');
-    
-    await User.create(usersData);
-    
-    const userMap = await getUsersObjectIds();
-    
-    const updatedGroupsData = groupsData.map(group => {
-      return {
-        ...group,
-        members: group.members.map(username => userMap[username])
-      };
-    });
-    
-    await Group.create(updatedGroupsData);
-    
+    await seedUsersAndGroups();
     console.log('Seed data inserted!');
     process.exit(0);
   } catch (error) {
