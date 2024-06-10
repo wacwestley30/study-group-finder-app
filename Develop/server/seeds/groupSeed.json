@@ -3,70 +3,60 @@
         "name": "Math Study Group",
         "subject": "Mathematics",
         "description": "A group for math enthusiasts",
-        "members": ["bobbrown", "hannahanderson", "johndoe", "fionamoore", "charliedavis"],
-        "schedule": "Mondays at 6 PM"
+        "members": ["bobbrown", "hannahanderson", "johndoe", "fionamoore", "charliedavis"]
     },
     {
         "name": "Bio Research Team",
         "subject": "Biology",
         "description": "A group for biology research",
-        "members": ["janesmith", "ethanwilson", "daisymiller", "georgetaylor", "alicejohnson"],
-        "schedule": "Wednesdays at 4 PM"
+        "members": ["janesmith", "ethanwilson", "daisymiller", "georgetaylor", "alicejohnson"]
     },
     {
         "name": "Physics Club",
         "subject": "Physics",
         "description": "A club for physics lovers",
-        "members": ["alicejohnson", "georgetaylor", "johndoe", "fionamoore", "hannahanderson"],
-        "schedule": "Fridays at 5 PM"
+        "members": ["alicejohnson", "georgetaylor", "johndoe", "fionamoore", "hannahanderson"]
     },
     {
         "name": "Chemistry Group",
         "subject": "Chemistry",
         "description": "A group for chemistry studies",
-        "members": ["charliedavis", "daisymiller", "janesmith", "ethanwilson", "bobbrown"],
-        "schedule": "Tuesdays at 3 PM"
+        "members": ["charliedavis", "daisymiller", "janesmith", "ethanwilson", "bobbrown"]
     },
     {
         "name": "Engineering Group",
         "subject": "Engineering",
         "description": "A group for engineering projects",
-        "members": ["daisymiller", "johndoe", "alicejohnson", "georgetaylor", "hannahanderson"],
-        "schedule": "Thursdays at 2 PM"
+        "members": ["daisymiller", "johndoe", "alicejohnson", "georgetaylor", "hannahanderson"]
     },
     {
         "name": "Computer Science Club",
         "subject": "Computer Science",
         "description": "A club for CS students",
-        "members": ["johndoe", "fionamoore", "bobbrown", "charliedavis", "hannahanderson"],
-        "schedule": "Saturdays at 1 PM"
+        "members": ["johndoe", "fionamoore", "bobbrown", "charliedavis", "hannahanderson"]
     },
     {
         "name": "Literature Group",
         "subject": "Literature",
         "description": "A group for literature discussions",
-        "members": ["janesmith", "daisymiller", "ethanwilson", "georgetaylor", "alicejohnson"],
-        "schedule": "Fridays at 7 PM"
+        "members": ["janesmith", "daisymiller", "ethanwilson", "georgetaylor", "alicejohnson"]
     },
     {
         "name": "History Club",
         "subject": "History",
         "description": "A club for history enthusiasts",
-        "members": ["charliedavis", "johndoe", "fionamoore", "bobbrown", "hannahanderson"],
-        "schedule": "Mondays at 5 PM"
+        "members": ["charliedavis", "johndoe", "fionamoore", "bobbrown", "hannahanderson"]
     },
     {
         "name": "Art Group",
         "subject": "Art",
         "description": "A group for art projects",
-        "members": ["alicejohnson", "janesmith", "daisymiller", "ethanwilson", "georgetaylor"],
-        "schedule": "Wednesdays at 6 PM"
+        "members": ["alicejohnson", "janesmith", "daisymiller", "ethanwilson", "georgetaylor"]
     },
     {
         "name": "Philosophy Group",
         "subject": "Philosophy",
         "description": "A group for philosophy discussions",
-        "members": ["hannahanderson", "charliedavis", "johndoe", "fionamoore", "bobbrown"],
-        "schedule": "Thursdays at 4 PM"
+        "members": ["hannahanderson", "charliedavis", "johndoe", "fionamoore", "bobbrown"]
     }
 ]
