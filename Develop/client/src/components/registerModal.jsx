@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
-import Auth from '../utils/auth'; // Import the Auth module
+import { ADD_USER, LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const RegisterModal = ({ isOpen, onClose }) => {
   // Define state variables
@@ -9,13 +9,15 @@ const RegisterModal = ({ isOpen, onClose }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [addUser, { loading, error }] = useMutation(ADD_USER, {
+  const [addUser, { loading: addingUser, error: addUserError }] = useMutation(ADD_USER, {
     onCompleted: (data) => {
       console.log('Registration successful', data);
       // If registration is successful, log in the user
       handleLogin();
     },
   });
+
+  const [login, { loading: loggingIn, error: loginError }] = useMutation(LOGIN_USER);
 
   // Function to handle register form submission
   const handleRegister = async (e) => {
@@ -109,14 +111,15 @@ const RegisterModal = ({ isOpen, onClose }) => {
             {/* Submit button */}
             <div className="field">
               <div className="control">
-                <button className="button is-link registerButton" type="submit" disabled={loading}>
-                  {loading ? 'Registering...' : 'Register'}
+                <button className="button is-link registerButton" type="submit" disabled={addingUser}>
+                  {addingUser ? 'Registering...' : 'Register'}
                 </button>
               </div>
             </div>
           </form>
           {/* Display error message if there's an error */}
-          {error && <p className="error">Registration failed: {error.message}</p>}
+          {addUserError && <p className="error">Registration failed: {addUserError.message}</p>}
+          {loginError && <p className="error">Login after registration failed: {loginError.message}</p>}
         </div>
       </div>
       {/* Modal close button */}
