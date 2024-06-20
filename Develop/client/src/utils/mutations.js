@@ -26,6 +26,21 @@ export const ADD_USER = gql`
   }
 `;
 
+export const EDIT_USER = gql`
+  mutation editUser($firstName: String, $lastName: String, $university: String, $major: String, $year: Int) {
+    editUser(firstName: $firstName, lastName: $lastName, university: $university, major: $major, year: $year) {
+      _id
+      username
+      email
+      firstName
+      lastName
+      university
+      major
+      year
+    }
+  }
+`;
+
 export const REMOVE_USER = gql`
   mutation removeUser($userId: ID!) {
     removeUser(userId: $userId) {

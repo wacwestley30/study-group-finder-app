@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_GROUP } from '../utils/mutations';
-import { GET_USER, GET_ME } from '../utils/queries'; //Import the necessary queries
+import { GET_USER, GET_ME } from '../utils/queries';
 
 const GroupModal = ({ isOpen, onClose, userId }) => {
   const [name, setName] = useState('');
